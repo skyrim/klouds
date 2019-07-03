@@ -1,0 +1,13 @@
+{
+  "compilerOptions": {
+    "target": "es3",
+    "module": "commonjs",
+    "declaration": true,
+    "lib": ["dom", "es5", "es2016"],
+    "strict": true,
+    "outDir": "lib",
+    "skipLibCheck": true
+  },
+  "include": ["src/**.*"],
+  "exclude": ["node_modules"]
+}

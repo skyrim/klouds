@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>Klouds</title>
+
+    <!-- style -->
+    <link href='https://fonts.googleapis.com/css?family=Roboto+Slab' rel='stylesheet' type='text/css'>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/spectrum/1.8.0/spectrum.min.css" rel="stylesheet" >
+    <link href="style.css" rel="stylesheet">
+  </head>
+
+  <body>
+    <div id="canvasContainer">
+      <canvas id="myCanvas"></canvas>
+    </div>
+  
+    <div class="page">
+      <header>
+        <h1>Klouds</h1>
+        <h2>Simple JavaScript library that generates animated clouds using WebGL</h2>
+      </header>
+
+      <div class="fiddle">
+        <div class="left">
+          <label>Number of cloud layers:</label>
+          <input type="range" id="klouds-range" min="1" max="8" step="1" value="5">
+
+          <label>Speed:</label>
+          <input type="range" id="klouds-speed" min="-50" max="50" step="1" value="3">
+
+          <div>
+            <label>Cloud Color 1:</label>
+            <input type="custom" id="klouds-cloudcolor1" value="#19b2cc">
+          </div>
+
+          <div>
+            <label>Cloud Color 2:</label>
+            <input type="color" id="klouds-cloudcolor2" value="#ffffff">
+          </div>
+
+          <div>
+            <label>Background Color:</label>
+            <input type="color" id="klouds-bgcolor" value="#00667f">
+          </div>
+        </div>
+
+        <div class="right">
+          <h3>Code:</h3>
+          <div id="fiddle-code" class="code"></div>
+
+          <h3>Code using jQuery:</h3>
+          <div id="fiddle-jq-code" class="code"></div>
+        </div>
+      </div>
+    </div>
+
+    <section class="second-cloud-container">
+      <canvas id="second-cloud"></canvas>
+    </section>
+
+    <section class="full-example">
+      <div class="wrapper">
+        <h2>Full code example</h2>
+        <div>
+          <div class="code html">
+            <pre style='color:#000000;background:#ffffff;'>
+              <span style='color:#696969; '>&lt;!-- html code --></span>
+              <span style='color:#004a43; '>&lt;!doctype html></span>
+              <span style='color:#a65700; '>&lt;</span><span style='color:#800000; font-weight:bold; '>html</span><span style='color:#a65700; '>></span>
+              <span style='color:#a65700; '>&lt;</span><span style='color:#800000; font-weight:bold; '>head</span><span style='color:#a65700; '>></span>
+                <span style='color:#a65700; '>&lt;</span><span style='color:#800000; font-weight:bold; '>title</span><span style='color:#a65700; '>></span>Klouds Example<span style='color:#a65700; '>&lt;/</span><span style='color:#800000; font-weight:bold; '>title</span><span style='color:#a65700; '>></span>
+                <span style='color:#a65700; '>&lt;</span><span style='color:#800000; font-weight:bold; '>link</span><span style='color:#274796; '> </span><span style='color:#074726; '>href</span><span style='color:#808030; '>=</span><span style='color:#0000e6; '>"your-style.css"</span><span style='color:#274796; '> </span><span style='color:#074726; '>rel</span><span style='color:#808030; '>=</span><span style='color:#0000e6; '>"stylesheet"</span><span style='color:#a65700; '>></span>
+              <span style='color:#a65700; '>&lt;/</span><span style='color:#800000; font-weight:bold; '>head</span><span style='color:#a65700; '>></span>
+              <span style='color:#a65700; '>&lt;</span><span style='color:#800000; font-weight:bold; '>body</span><span style='color:#a65700; '>></span>
+                <span style='color:#a65700; '>&lt;</span><span style='color:#800000; font-weight:bold; '>div</span><span style='color:#274796; '> </span><span style='color:#074726; '>id</span><span style='color:#808030; '>=</span><span style='color:#0000e6; '>"myCanvasContainer"</span><span style='color:#a65700; '>></span>
+                    <span style='color:#a65700; '>&lt;</span><span style='color:#800000; font-weight:bold; '>canvas</span><span style='color:#274796; '> </span><span style='color:#074726; '>id</span><span style='color:#808030; '>=</span><span style='color:#0000e6; '>"myCanvas"</span><span style='color:#a65700; '>></span><span style='color:#a65700; '>&lt;/</span><span style='color:#800000; font-weight:bold; '>canvas</span><span style='color:#a65700; '>></span>
+                <span style='color:#a65700; '>&lt;/</span><span style='color:#800000; font-weight:bold; '>div</span><span style='color:#a65700; '>></span>
+
+                <span style='color:#a65700; '>&lt;</span><span style='color:#800000; font-weight:bold; '>script</span><span style='color:#274796; '> </span><span style='color:#074726; '>src</span><span style='color:#808030; '>=</span><span style='color:#0000e6; '>"klouds.min.js"</span><span style='color:#a65700; '>></span><span style='color:#a65700; '>&lt;/</span><span style='color:#800000; font-weight:bold; '>script</span><span style='color:#a65700; '>></span>
+                <span style='color:#a65700; '>&lt;</span><span style='color:#800000; font-weight:bold; '>script</span><span style='color:#274796; '> </span><span style='color:#074726; '>src</span><span style='color:#808030; '>=</span><span style='color:#0000e6; '>"your-script.js"</span><span style='color:#a65700; '>></span><span style='color:#a65700; '>&lt;/</span><span style='color:#800000; font-weight:bold; '>script</span><span style='color:#a65700; '>></span>
+              <span style='color:#a65700; '>&lt;/</span><span style='color:#800000; font-weight:bold; '>body</span><span style='color:#a65700; '>></span>
+              <span style='color:#a65700; '>&lt;/</span><span style='color:#800000; font-weight:bold; '>html</span><span style='color:#a65700; '>></span>
+            </pre>
+          </div>
+
+          <div class="code">
+            <pre style='color:#000000;background:#ffffff;'>
+              <span style='color:#696969; '>// your-script.js</span>
+              <span style='color:#800000; font-weight:bold; '>new</span> Klouds<span style='color:#808030; '>(</span><span style='color:#800080; '>{</span>
+                selector<span style='color:#800080; '>:</span> <span style='color:#800000; '>'</span><span style='color:#0000e6; '>#myCanvas</span><span style='color:#800000; '>'</span><span style='color:#808030; '>,</span>
+                layerCount<span style='color:#800080; '>:</span> <span style='color:#008c00; '>5</span><span style='color:#808030; '>,</span>
+                speed<span style='color:#800080; '>:</span> <span style='color:#008c00; '>1</span><span style='color:#808030; '>,</span>
+                cloudColor1<span style='color:#800080; '>:</span> <span style='color:#800000; '>'</span><span style='color:#0000e6; '>#1ab3cc</span><span style='color:#800000; '>'</span><span style='color:#808030; '>,</span>
+                cloudColor2<span style='color:#800080; '>:</span> <span style='color:#800000; '>'</span><span style='color:#0000e6; '>#ffffff</span><span style='color:#800000; '>'</span><span style='color:#808030; '>,</span>
+                bgColor<span style='color:#800080; '>:</span> <span style='color:#800000; '>'</span><span style='color:#0000e6; '>#06680</span><span style='color:#800000; '>'</span>
+              <span style='color:#800080; '>}</span><span style='color:#808030; '>)</span>
+            </pre>
+          </div>
+
+          <div class="code">
+            <pre style='color:#000000;background:#ffffff;'>
+              <span style='color:#696969; '>/* your-style.css */</span>
+              <pre style='color:#000000;background:#ffffff;'><span style='color:#808030; '>#</span>myCanvasContainer <span style='color:#800080; '>{</span>
+                <span style='color:#bb7977; font-weight:bold; '>width</span><span style='color:#808030; '>:</span><span style='color:#008c00; '>100</span><span style='color:#006600; '>%</span><span style='color:#800080; '>;</span>
+                <span style='color:#bb7977; font-weight:bold; '>height</span><span style='color:#808030; '>:</span><span style='color:#008c00; '>240</span><span style='color:#006600; '>px</span><span style='color:#800080; '>;</span>
+              <span style='color:#800080; '>}</span>
+            </pre>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha256-k2WSCIexGzOj3Euiig+TlR8gA0EmPjuc79OEeY5L45g=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/spectrum/1.8.0/spectrum.min.js"></script>
+    <script src="index.js"></script>
+    <script src="page.js"></script>
+  </body>
+</html>
