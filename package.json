@@ -5,8 +5,11 @@
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "scripts": {
-    "start": "webpack-dev-server",
-    "build": "rimraf lib && cross-env NODE_ENV=production webpack"
+    "start": "npm run build:dev && webpack-dev-server",
+    "build": "npm run clean && npm run build:dev && npm run build:prod",
+    "build:dev": "webpack",
+    "build:prod": "cross-env NODE_ENV=production webpack",
+    "clean": "rimraf lib"
   },
   "keywords": [
     "cloud",

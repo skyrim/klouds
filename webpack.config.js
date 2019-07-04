@@ -25,7 +25,9 @@ const isProd = process.env.NODE_ENV === 'production'
 
 module.exports = {
   mode: isProd ? 'production' : 'development',
-  entry: {
+  entry: isProd ? {
+    'index.min': path.resolve(__dirname, 'src/index.ts')
+  } : {
     index: path.resolve(__dirname, 'src/index.ts')
   },
   output: {
@@ -54,10 +56,6 @@ module.exports = {
   },
   plugins: [new ATL.CheckerPlugin(), new DtsBundlePlugin()],
   devServer: {
-    contentBase: [
-      path.resolve(__dirname, 'public'),
-      path.resolve(__dirname, 'lib')
-    ],
     compress: true,
     port: 3337,
     inline: false,
