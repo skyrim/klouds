@@ -3,7 +3,10 @@ import * as twgl from 'twgl.js'
 import vs from './shader.vert'
 import fs from './shader.frag'
 
-type Vec3 = [number, number, number]
+export type Vec3 = [number, number, number]
+
+declare const PACKAGE_VERSION: any
+export const VERSION: string = PACKAGE_VERSION
 
 function normalizeColor(color: string): Vec3 {
   const div = document.createElement('div')

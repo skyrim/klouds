@@ -2,6 +2,7 @@ const fs = require('fs')
 const path = require('path')
 const dts = require('dts-bundle')
 const ATL = require('awesome-typescript-loader')
+const webpack = require('webpack')
 
 const package = JSON.parse(fs.readFileSync('package.json').toString())
 
@@ -25,11 +26,13 @@ const isProd = process.env.NODE_ENV === 'production'
 
 module.exports = {
   mode: isProd ? 'production' : 'development',
-  entry: isProd ? {
-    'klouds.min': path.resolve(__dirname, 'src/index.ts')
-  } : {
-    'klouds': path.resolve(__dirname, 'src/index.ts')
-  },
+  entry: isProd
+    ? {
+        'klouds.min': path.resolve(__dirname, 'src/index.ts')
+      }
+    : {
+        klouds: path.resolve(__dirname, 'src/index.ts')
+      },
   output: {
     filename: '[name].js',
     path: path.resolve(__dirname, outDir),
@@ -54,7 +57,13 @@ module.exports = {
   resolve: {
     extensions: ['.ts']
   },
-  plugins: [new ATL.CheckerPlugin(), new DtsBundlePlugin()],
+  plugins: [
+    new ATL.CheckerPlugin(),
+    new DtsBundlePlugin(),
+    new webpack.DefinePlugin({
+      PACKAGE_VERSION: JSON.stringify(package.version)
+    })
+  ],
   devServer: {
     compress: true,
     port: 3337,
