@@ -136,7 +136,7 @@ export class Klouds {
     }
   }
 
-  render = (time: number) => {
+  private render = (time: number) => {
     const gl = this.gl
     const programInfo = this.programInfo
     const bufferInfo = this.bufferInfo
@@ -172,6 +172,10 @@ export class Klouds {
   }
 
   start() {
+    if (this.isRunning) {
+      return
+    }
+
     this.isRunning = true
     requestAnimationFrame(this.render)
   }
