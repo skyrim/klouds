@@ -13,7 +13,7 @@ DtsBundlePlugin.prototype.apply = function(compiler) {
     dts.bundle({
       name: package.name,
       main: __dirname + `/${outDir}/index.d.ts`,
-      out: path.resolve(__dirname, `${outDir}/index.d.ts`),
+      out: path.resolve(__dirname, `${outDir}/klouds.d.ts`),
       removeSource: true,
       outputAsModuleFolder: true,
       verbose: false
@@ -26,14 +26,14 @@ const isProd = process.env.NODE_ENV === 'production'
 module.exports = {
   mode: isProd ? 'production' : 'development',
   entry: isProd ? {
-    'index.min': path.resolve(__dirname, 'src/index.ts')
+    'klouds.min': path.resolve(__dirname, 'src/index.ts')
   } : {
-    index: path.resolve(__dirname, 'src/index.ts')
+    'klouds': path.resolve(__dirname, 'src/index.ts')
   },
   output: {
     filename: '[name].js',
     path: path.resolve(__dirname, outDir),
-    library: 'Klouds',
+    library: 'klouds',
     libraryTarget: 'umd'
   },
   devtool: isProd ? 'source-map' : false,

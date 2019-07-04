@@ -205,6 +205,10 @@ export class Klouds {
   }
 }
 
+export function create(options: KloudsOptions) {
+  return new Klouds(options)
+}
+
 if (window && typeof (window as any).jQuery !== 'undefined') {
   ;(window as any).jQuery.fn.Klouds = function(options: KloudsOptions) {
     options = options || {}
@@ -218,5 +222,3 @@ if (window && typeof (window as any).jQuery !== 'undefined') {
     return skies
   }
 }
-
-module.exports = Klouds
