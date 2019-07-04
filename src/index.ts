@@ -66,11 +66,11 @@ export class Klouds {
   accumTime: number = 0
   lastTime: number = performance.now()
 
-  speed: number
-  layerCount: number
-  bgColor: Vec3
-  cloudColor1: Vec3
-  cloudColor2: Vec3
+  speed!: number
+  layerCount!: number
+  bgColor!: Vec3
+  cloudColor1!: Vec3
+  cloudColor2!: Vec3
 
   constructor(options: KloudsOptions) {
     const element = this.queryRootElement(options.selector)
@@ -102,11 +102,12 @@ export class Klouds {
     this.programInfo = programInfo
     this.bufferInfo = bufferInfo
 
-    this.speed = speed
-    this.bgColor = bgColor
-    this.cloudColor1 = cloudColor1
-    this.cloudColor2 = cloudColor2
-    this.layerCount = layerCount
+    
+    this.setSpeed(speed)
+    this.setLayerCount(layerCount)
+    this.setBgColor(bgColor)
+    this.setCloudColor1(cloudColor1)
+    this.setCloudColor2(cloudColor2)
 
     this.start()
   }
@@ -174,6 +175,10 @@ export class Klouds {
   start() {
     this.isRunning = true
     requestAnimationFrame(this.render)
+  }
+
+  setSpeed(speed: number) {
+    this.speed = Math.max(-100, Math.min(100, speed))
   }
 
   setCloudColor1(color: string | Vec3) {
