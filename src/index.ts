@@ -47,11 +47,11 @@ function parseColor(color: string | Vec3): Vec3 {
 
 export interface KloudsOptions {
   selector: string | HTMLCanvasElement
-  speed: number
-  layerCount: number
-  bgColor: Vec3
-  cloudColor1: Vec3
-  cloudColor2: Vec3
+  speed?: number
+  layerCount?: number
+  bgColor?: Vec3
+  cloudColor1?: Vec3
+  cloudColor2?: Vec3
 }
 
 export class Klouds {
@@ -107,8 +107,6 @@ export class Klouds {
     this.cloudColor1 = cloudColor1
     this.cloudColor2 = cloudColor2
     this.layerCount = layerCount
-
-    console.log(this)
 
     this.start()
   }
