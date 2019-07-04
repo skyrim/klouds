@@ -55,22 +55,22 @@ export interface KloudsOptions {
 }
 
 export class Klouds {
-  gl: WebGLRenderingContext
-  programInfo: twgl.ProgramInfo
-  bufferInfo: twgl.BufferInfo
-  arrays: { position: number[] } = {
+  private gl: WebGLRenderingContext
+  private programInfo: twgl.ProgramInfo
+  private bufferInfo: twgl.BufferInfo
+  private arrays: { position: number[] } = {
     position: [-1, -1, 0, 1, -1, 0, -1, 1, 0, -1, 1, 0, 1, -1, 0, 1, 1, 0]
   }
 
-  isRunning: boolean = false
-  accumTime: number = 0
-  lastTime: number = performance.now()
+  private isRunning: boolean = false
+  private accumTime: number = 0
+  private lastTime: number = performance.now()
 
-  speed!: number
-  layerCount!: number
-  bgColor!: Vec3
-  cloudColor1!: Vec3
-  cloudColor2!: Vec3
+  private speed!: number
+  private layerCount!: number
+  private bgColor!: Vec3
+  private cloudColor1!: Vec3
+  private cloudColor2!: Vec3
 
   constructor(options: KloudsOptions) {
     const element = this.queryRootElement(options.selector)
@@ -102,7 +102,6 @@ export class Klouds {
     this.programInfo = programInfo
     this.bufferInfo = bufferInfo
 
-    
     this.setSpeed(speed)
     this.setLayerCount(layerCount)
     this.setBgColor(bgColor)
@@ -207,6 +206,26 @@ export class Klouds {
 
   setLayerCount(count: number) {
     this.layerCount = Math.max(1, Math.min(8, count))
+  }
+
+  getSpeed() {
+    return this.speed
+  }
+
+  getLayerCount() {
+    return this.layerCount
+  }
+
+  getBgColor() {
+    return this.bgColor.slice()
+  }
+
+  getCloudColor1() {
+    return this.cloudColor1.slice()
+  }
+
+  getCloudColor2() {
+    return this.cloudColor2.slice()
   }
 }
 
