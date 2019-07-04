@@ -84,15 +84,9 @@ export class Klouds {
     const speed = options.speed || 1
     const layerCount = options.layerCount || 5
 
-    const cloudColor1: Vec3 = options.cloudColor1
-      ? parseColor(options.cloudColor1)
-      : [0.1, 0.7, 0.8]
-    const cloudColor2: Vec3 = options.cloudColor2
-      ? parseColor(options.cloudColor2)
-      : [1.0, 1.0, 1.0]
-    const bgColor: Vec3 = options.bgColor
-      ? parseColor(options.bgColor)
-      : [0.0, 0.4, 0.5]
+    const cloudColor1: Vec3 = options.cloudColor1 || [25, 178, 204]
+    const cloudColor2: Vec3 = options.cloudColor2 || [255, 255, 255]
+    const bgColor: Vec3 = options.bgColor || [0, 102, 128]
 
     element.style.width = '100%'
     element.style.height = '100%'

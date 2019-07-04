@@ -1,6 +1,6 @@
 {
   "name": "klouds",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Simple JavaScript library that generates animated clouds using WebGL",
   "main": "lib/klouds.min.js",
   "types": "lib/klouds.d.ts",

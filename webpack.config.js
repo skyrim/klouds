@@ -13,7 +13,7 @@ DtsBundlePlugin.prototype.apply = function(compiler) {
   compiler.hooks.afterEmit.tap('webpack-dts-bundle', () => {
     dts.bundle({
       name: package.name,
-      main: __dirname + `/${outDir}/index.d.ts`,
+      main: path.resolve(__dirname, `${outDir}/index.d.ts`),
       out: path.resolve(__dirname, `${outDir}/klouds.d.ts`),
       removeSource: true,
       outputAsModuleFolder: true,

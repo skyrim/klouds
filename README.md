@@ -65,13 +65,13 @@ Note: Typescript definition files are provided with the library.
 Function `klouds.create` takes a single object argument.
 
 name | required | type | description | default value | example values
------|----------|------|-------------|--------|----|----
+-----|----------|------|-------------|---------------|---------------
 `selector` | true | `string` \| `HTMLCanvasElement` | A selector string to your canvas element or an actual canvas element <br /> <br /> Note: jQuery plugin of this library does not require selector as an option. | | `"#your-canvas-id"`
 `speed` | false | `number` | Cloud movement speed. Positive speed go to the left, negative go to the right side. Zero value makes the clouds stand still. | `1` | `0` <br /> `42` <br /> `-21`
 `layerCount` | false | `number` | Number of cloud paralax layers. Can go from 1 to 8. | `3` | `1` <br /> `5` <br /> `8`
-`bgColor` | false | `string` \| `number[]` | Color of the sky behind the clouds | `[0.0, 0.4, 0.5]` | `"cyan"` <br /> `"rgb(255, 128, 0)"` <br /> `[0, 0.5, 0.9]`
-`cloudColor1` | false | `string` \| `number[]` | Color of the first cloud layer. Cloud layers between first and last layer have a interpolated color. | `[0.1, 0.7, 0.8]` | `"cyan"` <br /> `"rgb(255, 128, 0)"` <br /> `[0, 0.5, 0.9]`
-`cloudColor2` | false | `string` \| `number[]` | Color of the last cloud layer. Cloud layers between first and last layer have a interpolated color. | `[1.0, 1.0, 1.0]` | `"cyan"` <br /> `"rgb(255, 128, 0)"` <br /> `[0, 0.5, 0.9]`
+`bgColor` | false | `string` \| `number[]` | Color of the sky behind the clouds | `[0.0, 102, 128]` | `"cyan"` <br /> `"#f9c900"` <br /> `"rgb(255, 128, 0)"` <br /> `[0, 128, 220]`
+`cloudColor1` | false | `string` \| `number[]` | Color of the first cloud layer. Cloud layers between first and last layer have a interpolated color. | `[25, 178, 204]` | `"cyan"` <br /> `"#f9c900"` <br /> `"rgb(255, 128, 0)"` <br /> `[0, 128, 220]`
+`cloudColor2` | false | `string` \| `number[]` | Color of the last cloud layer. Cloud layers between first and last layer have a interpolated color. | `[255, 255, 255]` | `"cyan"` <br /> `"#f9c900"` <br /> `"rgb(255, 128, 0)"` <br /> `[0, 128, 220]`
 
 ------------
 
