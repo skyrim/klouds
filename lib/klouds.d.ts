@@ -12,8 +12,8 @@ export interface KloudsOptions {
 }
 export class Klouds {
     constructor(options: KloudsOptions);
-    stop(): void;
     start(): void;
+    stop(): void;
     setSpeed(speed: number): void;
     setCloudColor1(color: string | Vec3): void;
     setCloudColor2(color: string | Vec3): void;
