@@ -4,6 +4,15 @@
   "description": "Simple JavaScript library that generates animated clouds using WebGL",
   "main": "lib/klouds.min.js",
   "types": "lib/klouds.d.ts",
+  "homepage": "https://skyrim.github.io/klouds/",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/skyrim/klouds.git"
+  },
+  "bugs": {
+    "email": "skyrim@live.com",
+    "url": "https://github.com/skyrim/klouds/issues"
+  },
   "scripts": {
     "start": "npm run build:dev && webpack-dev-server",
     "build": "npm run clean && npm run build:dev && npm run build:prod",
@@ -18,7 +27,7 @@
     "canvas",
     "webgl"
   ],
-  "author": "Stefan Stojković",
+  "author": "Stefan Stojković <skyrim@live.com> (https://stefan100.com)",
   "license": "MIT",
   "dependencies": {},
   "devDependencies": {
