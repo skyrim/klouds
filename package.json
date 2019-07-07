@@ -1,12 +1,13 @@
 {
   "name": "klouds",
-  "version": "1.1.1",
+  "version": "2.0.0",
   "description": "Simple JavaScript library that generates animated clouds using WebGL",
   "main": "lib/klouds.min.js",
   "types": "lib/klouds.d.ts",
   "scripts": {
     "start": "npm run build:dev && webpack-dev-server",
     "build": "npm run clean && npm run build:dev && npm run build:prod",
+    "build:watch": "webpack -w",
     "build:dev": "webpack",
     "build:prod": "cross-env NODE_ENV=production webpack",
     "clean": "rimraf lib"
@@ -19,9 +20,7 @@
   ],
   "author": "Stefan Stojković",
   "license": "MIT",
-  "dependencies": {
-    "twgl.js": "^4.11.0"
-  },
+  "dependencies": {},
   "devDependencies": {
     "awesome-typescript-loader": "^5.2.1",
     "cross-env": "^5.2.0",

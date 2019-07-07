@@ -1,7 +1,11 @@
-/// <reference path="global.d.ts" />
-import * as twgl from 'twgl.js'
 import vs from './shader.vert'
 import fs from './shader.frag'
+import {
+  createContext,
+  createProgram,
+  Program,
+  resizeCanvasToDisplaySize
+} from './graphics'
 
 export type Vec3 = [number, number, number]
 
@@ -58,12 +62,9 @@ export interface KloudsOptions {
 }
 
 export class Klouds {
-  private gl: WebGLRenderingContext
-  private programInfo: twgl.ProgramInfo
-  private bufferInfo: twgl.BufferInfo
-  private arrays: { position: number[] } = {
-    position: [-1, -1, 0, 1, -1, 0, -1, 1, 0, -1, 1, 0, 1, -1, 0, 1, 1, 0]
-  }
+  private gl!: WebGLRenderingContext
+  private program!: Program
+  private buffer!: WebGLBuffer
 
   private isRunning: boolean = false
   private accumTime: number = 0
@@ -76,8 +77,8 @@ export class Klouds {
   private cloudColor2!: Vec3
 
   constructor(options: KloudsOptions) {
-    const element = this.queryRootElement(options.selector)
-    if (!element) {
+    const canvas = this.queryRootElement(options.selector)
+    if (!canvas) {
       throw new Error(`Invalid options.selector value passed to Klouds`)
     }
 
@@ -88,16 +89,10 @@ export class Klouds {
     const cloudColor2: Vec3 = options.cloudColor2 || [255, 255, 255]
     const bgColor: Vec3 = options.bgColor || [0, 102, 128]
 
-    element.style.width = '100%'
-    element.style.height = '100%'
+    canvas.style.width = '100%'
+    canvas.style.height = '100%'
 
-    const gl = twgl.getWebGLContext(element)
-    const programInfo = twgl.createProgramInfo(gl, [vs, fs])
-    const bufferInfo = twgl.createBufferInfoFromArrays(gl, this.arrays)
-
-    this.gl = gl
-    this.programInfo = programInfo
-    this.bufferInfo = bufferInfo
+    this.initGraphics(canvas)
 
     this.setSpeed(speed)
     this.setLayerCount(layerCount)
@@ -133,39 +128,95 @@ export class Klouds {
     }
   }
 
+  private initGraphics(canvas: HTMLCanvasElement) {
+    const gl = createContext(canvas)
+    if (!gl) {
+      throw new Error('Failed to create WebGL context')
+    }
+
+    const program = createProgram(
+      gl,
+      vs,
+      fs,
+      ['position'],
+      [
+        'resolution',
+        'layerCount',
+        'time',
+        'bgColor',
+        'cloudColor1',
+        'cloudColor2'
+      ]
+    )
+    if (!program) {
+      throw new Error('Failed to create WebGL program')
+    }
+
+    const buffer = gl.createBuffer()
+    if (!buffer) {
+      gl.deleteProgram(program)
+      throw new Error('Failed to create WebGL buffer')
+    }
+
+    const posAttrib = program.attributes['position']
+    gl.enableVertexAttribArray(posAttrib)
+    gl.vertexAttribPointer(posAttrib, 3, gl.FLOAT, false, 0, 0)
+
+    const bufferData = [
+      [-1, -1, 0],
+      [1, -1, 0],
+      [-1, 1, 0],
+      [-1, 1, 0],
+      [1, -1, 0],
+      [1, 1, 0]
+    ]
+    gl.bindBuffer(gl.ARRAY_BUFFER, buffer)
+    gl.bufferData(
+      gl.ARRAY_BUFFER,
+      new Float32Array(bufferData.reduce((prev, cur) => prev.concat(cur), [])),
+      gl.STATIC_DRAW
+    )
+
+    this.gl = gl
+    this.program = program
+    this.buffer = buffer
+  }
+
   private render = (time: number) => {
     const gl = this.gl
-    const programInfo = this.programInfo
-    const bufferInfo = this.bufferInfo
+    const program = this.program
+    const buffer = this.buffer
 
     const dt = (time - this.lastTime) * this.speed * 0.001
     this.accumTime += dt
     this.lastTime = time
 
-    twgl.resizeCanvasToDisplaySize(gl.canvas)
+    resizeCanvasToDisplaySize(gl.canvas)
     gl.viewport(0, 0, gl.canvas.width, gl.canvas.height)
 
-    const uniforms = {
-      time: this.accumTime,
-      resolution: [gl.canvas.width, gl.canvas.height],
-      bgColor: this.bgColor,
-      cloudColor1: this.cloudColor1,
-      cloudColor2: this.cloudColor2,
-      layerCount: this.layerCount / 10
-    }
+    gl.useProgram(program.handle)
 
-    gl.useProgram(programInfo.program)
-    twgl.setBuffersAndAttributes(gl, programInfo, bufferInfo)
-    twgl.setUniforms(programInfo, uniforms)
-    twgl.drawBufferInfo(gl, bufferInfo)
+    gl.bindBuffer(gl.ARRAY_BUFFER, buffer)
+    const posAttrib = program.attributes['position']
+    gl.enableVertexAttribArray(posAttrib)
+    gl.vertexAttribPointer(posAttrib, 3, gl.FLOAT, false, 0, 0)
+
+    gl.uniform2f(
+      program.uniforms['resolution'],
+      gl.canvas.width,
+      gl.canvas.height
+    )
+    gl.uniform1f(program.uniforms['layerCount'], this.layerCount)
+    gl.uniform1f(program.uniforms['time'], this.accumTime)
+    gl.uniform3fv(program.uniforms['bgColor'], this.bgColor)
+    gl.uniform3fv(program.uniforms['cloudColor1'], this.cloudColor1)
+    gl.uniform3fv(program.uniforms['cloudColor2'], this.cloudColor2)
+
+    gl.drawArrays(gl.TRIANGLES, 0, 6)
 
     if (this.isRunning) {
       requestAnimationFrame(this.render)
     }
-  }
-
-  stop() {
-    this.isRunning = false
   }
 
   start() {
@@ -175,6 +226,10 @@ export class Klouds {
 
     this.isRunning = true
     requestAnimationFrame(this.render)
+  }
+
+  stop() {
+    this.isRunning = false
   }
 
   setSpeed(speed: number) {
@@ -206,7 +261,7 @@ export class Klouds {
   }
 
   setLayerCount(count: number) {
-    this.layerCount = Math.max(1, Math.min(8, count))
+    this.layerCount = Math.max(1, Math.min(8, count)) / 10
   }
 
   getSpeed() {
