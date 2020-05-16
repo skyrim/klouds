@@ -21,7 +21,9 @@ function normalizeColor(color: string): Vec3 {
 
   const strColors = getComputedStyle(div).color || 'rgb(0, 0, 0)'
   const numColors = strColors.match(/[+-]?\d+(\.\d+)?/g)
-  const intColors = numColors ? numColors.map(a => parseInt(a, 10)) : [0, 0, 0]
+  const intColors = numColors
+    ? numColors.map((a) => parseInt(a, 10))
+    : [0, 0, 0]
 
   if (div.parentElement) {
     div.parentElement.removeChild(div)
@@ -62,6 +64,7 @@ export interface KloudsOptions {
 }
 
 export class Klouds {
+  private canvas!: HTMLCanvasElement
   private gl!: WebGLRenderingContext
   private program!: Program
   private buffer!: WebGLBuffer
@@ -81,6 +84,8 @@ export class Klouds {
     if (!canvas) {
       throw new Error(`Invalid options.selector value passed to Klouds`)
     }
+
+    this.canvas = canvas
 
     const speed = options.speed || 1
     const layerCount = options.layerCount || 5
@@ -191,7 +196,7 @@ export class Klouds {
     this.accumTime += dt
     this.lastTime = time
 
-    resizeCanvasToDisplaySize(gl.canvas)
+    resizeCanvasToDisplaySize(this.canvas)
     gl.viewport(0, 0, gl.canvas.width, gl.canvas.height)
 
     gl.useProgram(program.handle)

@@ -1,26 +1,8 @@
 const fs = require('fs')
 const path = require('path')
-const dts = require('dts-bundle')
-const ATL = require('awesome-typescript-loader')
 const webpack = require('webpack')
 
 const package = JSON.parse(fs.readFileSync('package.json').toString())
-
-const outDir = 'lib'
-
-function DtsBundlePlugin() {}
-DtsBundlePlugin.prototype.apply = function(compiler) {
-  compiler.hooks.afterEmit.tap('webpack-dts-bundle', () => {
-    dts.bundle({
-      name: package.name,
-      main: path.resolve(__dirname, `${outDir}/index.d.ts`),
-      out: path.resolve(__dirname, `${outDir}/klouds.d.ts`),
-      removeSource: true,
-      outputAsModuleFolder: true,
-      verbose: false
-    })
-  })
-}
 
 const isProd = process.env.NODE_ENV === 'production'
 
@@ -35,7 +17,7 @@ module.exports = {
       },
   output: {
     filename: '[name].js',
-    path: path.resolve(__dirname, outDir),
+    path: path.resolve(__dirname, 'lib'),
     library: 'klouds',
     libraryTarget: 'umd'
   },
@@ -50,16 +32,14 @@ module.exports = {
         test: /\.ts$/,
         include: [path.resolve(__dirname, 'src')],
         exclude: path.resolve(__dirname, 'node_modules'),
-        use: 'awesome-typescript-loader'
+        use: 'ts-loader'
       }
     ]
   },
   resolve: {
-    extensions: ['.ts']
+    extensions: ['.ts', '.tsx', '.js']
   },
   plugins: [
-    new ATL.CheckerPlugin(),
-    new DtsBundlePlugin(),
     new webpack.DefinePlugin({
       PACKAGE_VERSION: JSON.stringify(package.version)
     })
