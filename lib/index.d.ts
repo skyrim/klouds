@@ -1,4 +1,4 @@
-export declare type Vec3 = [number, number, number];
+export type Vec3 = [number, number, number];
 export declare const VERSION: string;
 export interface KloudsOptions {
     selector: string | HTMLCanvasElement;
