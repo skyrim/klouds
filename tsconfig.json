@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "target": "es3",
+    "target": "ES5",
     "module": "commonjs",
     "declaration": true,
     "lib": ["dom", "es5", "es2016"],
